@@ -1,0 +1,31 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Garage Door Opener Setup",
+        "description": "Configure your garage door with dual relays and position sensors.",
+        "data": {
+          "cover_name": "Garage Door Name",
+          "closed_sensor": "Closed Position Sensor",
+          "closed_sensor_state": "Closed Sensor State (when door is closed)",
+          "open_sensor": "Open Position Sensor",
+          "open_sensor_state": "Open Sensor State (when door is open)",
+          "open_relay": "Open/Up Relay Switch",
+          "close_relay": "Close/Down Relay Switch",
+          "open_time": "Time to Fully Open (seconds)",
+          "close_time": "Time to Fully Close (seconds)",
+          "enable_stuck_notification": "Enable Stuck Door Notification"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Unable to connect",
+      "invalid_auth": "Invalid authentication",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "Device is already configured"
+    }
+  }
+}
+

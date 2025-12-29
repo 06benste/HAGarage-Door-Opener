@@ -1,0 +1,7 @@
+{
+  "name": "Garage Door Opener",
+  "render_readme": true,
+  "domains": ["cover"],
+  "iot_class": "Local Push"
+}
+
