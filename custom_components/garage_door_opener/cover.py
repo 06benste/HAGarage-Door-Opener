@@ -12,6 +12,7 @@ from homeassistant.components.cover import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.event import async_track_state_change_event
 from homeassistant.helpers.restore_state import RestoreEntity
 
 from .const import (
@@ -175,7 +176,8 @@ class GarageDoorCoverEntity(CoverEntity, RestoreEntity):
         
         # Set up listeners for sensor changes
         self.async_on_remove(
-            self.hass.helpers.event.async_track_state_change(
+            async_track_state_change_event(
+                self.hass,
                 [self._closed_sensor, self._open_sensor],
                 self._async_sensor_changed,
             )
@@ -185,8 +187,14 @@ class GarageDoorCoverEntity(CoverEntity, RestoreEntity):
         await self._async_update_state()
 
     @callback
-    def _async_sensor_changed(self, entity_id: str, old_state, new_state) -> None:
+    def _async_sensor_changed(self, event) -> None:
         """Handle sensor state changes."""
+        new_state = event.data.get("new_state")
+        if new_state is None:
+            return
+        
+        entity_id = event.data.get("entity_id")
+        
         # If we're in a movement state and sensors indicate we've reached target, cancel timeout
         if self._state in ("opening", "closing"):
             closed_state = self.hass.states.get(self._closed_sensor)
